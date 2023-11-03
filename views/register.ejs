@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="css/register.css"> <!-- Link to the register.css file -->
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="registrationForm" action="/register" method="POST">
+            <div class="input-group">
+                <label for="register-username">Username:</label>
+		        <input type="text" id="register-username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="register-password">Password:</label>
+                <input type="password" id="register-password" name="password" required>
+            </div>
+            <div class="input-group">
+                Already a user? <a href="./login"> Login</a>
+            </div>
+            
+            <input type="submit" value="Register">
+            <p id="register-message"></p>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // prevents default form submission, instead using this custom JS
+
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        const errorText = await response.text(); //waiting for text response
+
+        if (response.status === 400 && errorText) {
+            // Display the error message in the #error-message element
+            document.getElementById('register-message').textContent = errorText;
+        } else if (response.status === 200) {
+            // Handle a successful registration, e.g., redirect or show a success message
+            document.getElementById('register-message').textContent = errorText;
+            document.getElementById('register-message').style.color = 'green';
+            //window.location.href = '/login';
+        }
+        });
+    </script>
+    
+    
+</body>
+</html>

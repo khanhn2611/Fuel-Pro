@@ -1,0 +1,33 @@
+body {
+    text-align: center;
+    background-color: #f0ffff;
+}
+
+div {
+    display: inline-block;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color:#E9DEC7;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#table {
+    display: block;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+img {
+    width: 250px;
+    border-radius: 20px;
+    float: left;
+    align-self: center;
+}
