@@ -318,3 +318,54 @@ app.get('/get-quote-history', (req, res) => {
 app.get('/hub', (req, res) => {
     res.render('hub'); 
 });
+
+app.get('/check-user-history', async (req, res) => {
+    if (req.session?.user?.id) {
+        try {
+            const [results] = await promisePool.query('SELECT COUNT(*) AS quoteCount FROM FuelQuotes WHERE userId = ?', [req.session.user.id]);
+            const hasHistory = results[0].quoteCount > 0;
+            res.json({ hasHistory });
+        } catch (error) {
+            console.error('Error checking user history:', error);
+            res.status(500).json({ error: 'Internal server error', details: error.message });
+        }
+    } else {
+        res.status(403).json({ error: 'User not authenticated' });
+    }
+});
+
+
+app.get('/update-profile', (req, res) => {
+    res.render('update-profile'); 
+});
+
+// Assuming express and other necessary modules are already set up
+
+// Endpoint to get current profile data
+app.get('/get-current-profile', async (req, res) => {
+    const userId = req.session.user.id;
+    try {
+        const [rows, fields] = await promisePool.query('SELECT * FROM userInformation WHERE user_id = ?', [userId]);
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).send('Internal server error');
+    }
+});
+
+// Endpoint to update profile
+app.post('/update-profile', async (req, res) => {
+    const userId = req.session.user.id;
+    const { fullName, address1, address2, city, state, zipcode } = req.body;
+
+    try {
+        await promisePool.query(
+            'UPDATE userInformation SET fullName = ?, address1 = ?, address2 = ?, city = ?, state = ?, zipcode = ? WHERE user_id = ?',
+            [fullName, address1, address2, city, state, zipcode, userId]
+        );
+        
+    } catch (error) {
+        console.error('Profile update error:', error);
+    
+    }
+});
