@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Profile</title>
+    <link rel="stylesheet" type="text/css" href="css/complete-profile.css">
+</head>
+<body>
+    <div id="profile-form">
+        <h2>Update Profile</h2>
+        <form id="update-profile" action="/update-profile" method="post">
+            <input type="text" id="full-name" placeholder="Full Name" name="fullName" maxlength="50" required>
+            <input type="text" id="address-1" placeholder="Address 1" name="address1" maxlength="100" required>
+            <input type="text" id="address-2" placeholder="Address 2" name="address2" maxlength="100">
+            <input type="text" id="city" placeholder="City" name="city" maxlength="100" required>
+            <input type="text" id="state" placeholder="State" name="state" maxlength="100" required>
+            <input type="text" id="zipcode" placeholder="Zipcode" name="zipcode" minlength="5" maxlength="9" required>
+            <input type="submit" value="Update Profile">
+            <!-- Update message placed here -->
+            <div id="update-message" style="display:none;"></div>
+        </form>
+    </div>
+    <script src="update-profile.js"></script>
+</body>
+</html>
